@@ -52,6 +52,7 @@
         test-can-migrate = ./tests/can-migrate.sh;
         test-no-db-file = ./tests/no-db-file.sh;
         test-checksum-match = ./tests/checksum-match.sh;
+        test-checksum-error = ./tests/checksum-error.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;

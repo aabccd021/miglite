@@ -1,8 +1,8 @@
 assert_dir=$(mktemp -d)
 migration_dir=$(mktemp -d)
 
-cp ./migrations/user.sql "$migration_dir"
-cp ./migrations/tweet.sql "$migration_dir"
+cp ./migrations/s1-user.sql "$migration_dir"
+cp ./migrations/s1-tweet.sql "$migration_dir"
 
 stdout=$(tiny-sqlite-migrate --db ./db.sqlite --migrations "$migration_dir" || true)
 printf "%s" "$stdout" >"$assert_dir/actual.txt"
