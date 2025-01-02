@@ -15,7 +15,6 @@
       utilLib = project-utils.lib;
 
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      lib = pkgs.lib;
 
       treefmtEval = treefmt-nix.lib.evalModule pkgs {
         projectRootFile = "flake.nix";

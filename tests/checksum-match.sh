@@ -7,8 +7,7 @@ cp ./migrations/s2-tweet.sql "$migration_dir"
 
 tiny-sqlite-migrate --db "$db" --migrations "$migration_dir"
 
-stdout=$(tiny-sqlite-migrate --db "$db" --migrations "$migration_dir")
-echo "$stdout" >"$assert_dir/actual.txt"
+tiny-sqlite-migrate --db "$db" --migrations "$migration_dir" >"$assert_dir/actual.txt"
 
 cat >"$assert_dir/expected.txt" <<EOF
 [CHECKSUM MATCH] s1-user.sql
