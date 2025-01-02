@@ -18,11 +18,11 @@ EOF
 
 diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
 
-echo "$stdout" >"$assert_dir/stdout_actual.txt"
+echo "$stdout" >"$assert_dir/actual.txt"
 
-cat >"$assert_dir/stdout_expected.txt" <<EOF
+cat >"$assert_dir/expected.txt" <<EOF
 [JUST APPLIED]   s1-user.sql
 [JUST APPLIED]   s2-tweet.sql
 EOF
 
-diff --unified --color=always "$assert_dir/stdout_expected.txt" "$assert_dir/stdout_actual.txt"
+diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
