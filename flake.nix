@@ -24,7 +24,7 @@
         programs.shfmt.enable = true;
         programs.shellcheck.enable = true;
         settings.formatter.shellcheck.options = [ "-s" "sh" ];
-        settings.global.excludes = [ "*.sql" "*.txt" "*.png" "*.jpg" "*.webp" ];
+        settings.global.excludes = [ "*.sql" "LICENSE" ];
       };
 
       scripts = {
