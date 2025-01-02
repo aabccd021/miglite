@@ -57,6 +57,7 @@
         test-checksum-error2 = ./tests/checksum-error2.sh;
         test-not-applied = ./tests/not-applied.sh;
         test-error = ./tests/error.sh;
+        test-insert-middle = ./tests/insert-middle.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;
