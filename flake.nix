@@ -59,6 +59,7 @@
         test-error = ./tests/error.sh;
         test-insert-middle = ./tests/insert-middle.sh;
         test-remove-middle = ./tests/remove-middle.sh;
+        test-remove-Last = ./tests/remove-last.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;
