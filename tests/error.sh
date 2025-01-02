@@ -1,14 +1,14 @@
 assert_dir=$(mktemp -d)
-migration_dir=$(mktemp -d)
+migrations=$(mktemp -d)
 db=$(mktemp)
 
-cp ./migrations/s1-user.sql "$migration_dir"
-tiny-sqlite-migrate --db "$db" --migrations "$migration_dir"
+cp ./migrations_template/s1-user.sql "$migrations"
+tiny-sqlite-migrate --db "$db" --migrations "$migrations"
 
-cp ./migrations/s2-error.sql "$migration_dir"
+cp ./migrations_template/s2-error.sql "$migrations"
 
 exit_code=0
-tiny-sqlite-migrate --db "$db" --migrations "$migration_dir" >"$assert_dir/actual.txt" || exit_code=$?
+tiny-sqlite-migrate --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"

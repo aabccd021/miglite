@@ -1,11 +1,11 @@
 assert_dir=$(mktemp -d)
-migration_dir=$(mktemp -d)
+migrations=$(mktemp -d)
 db=$(mktemp)
 
-cp ./migrations/s1-user.sql "$migration_dir"
-cp ./migrations/s2-tweet.sql "$migration_dir"
+cp ./migrations_template/s1-user.sql "$migrations"
+cp ./migrations_template/s2-tweet.sql "$migrations"
 
-tiny-sqlite-migrate --db "$db" --migrations "$migration_dir" >"$assert_dir/actual.txt"
+tiny-sqlite-migrate --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt"
 cat >"$assert_dir/expected.txt" <<EOF
 [JUST APPLIED]   s1-user.sql
 [JUST APPLIED]   s2-tweet.sql

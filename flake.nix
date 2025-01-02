@@ -41,7 +41,7 @@
         pkgs.runCommandNoCC name { } ''
           set -euo pipefail
           export PATH="${tiny-sqlite-migrate}/bin:${pkgs.sqlite}/bin:$PATH"
-          cp -Lr ${./migrations} ./migrations
+          cp -Lr ${./migrations} ./migrations_template
           echo "set -euo pipefail" > ./test.sh
           cat ${testPath} >> ./test.sh
           bash ./test.sh
