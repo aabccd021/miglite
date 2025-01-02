@@ -58,6 +58,7 @@
         test-not-applied = ./tests/not-applied.sh;
         test-error = ./tests/error.sh;
         test-insert-middle = ./tests/insert-middle.sh;
+        test-remove-middle = ./tests/remove-middle.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;
