@@ -54,6 +54,7 @@
         test-no-db-file = ./tests/no-db-file.sh;
         test-checksum-match = ./tests/checksum-match.sh;
         test-checksum-error = ./tests/checksum-error.sh;
+        test-not-applied = ./tests/not-applied.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;
