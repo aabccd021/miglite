@@ -54,6 +54,7 @@
         test-no-db-file = ./tests/no-db-file.sh;
         test-checksum-match = ./tests/checksum-match.sh;
         test-checksum-error = ./tests/checksum-error.sh;
+        test-checksum-error2 = ./tests/checksum-error2.sh;
         test-not-applied = ./tests/not-applied.sh;
         test-error = ./tests/error.sh;
       };
