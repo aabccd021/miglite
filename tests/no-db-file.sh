@@ -9,7 +9,6 @@ tiny-sqlite-migrate --db ./db.sqlite --migrations "$migration_dir" >"$assert_dir
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"
-  cat actual.txt
   exit 1
 fi
 

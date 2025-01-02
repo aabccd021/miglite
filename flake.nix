@@ -55,6 +55,7 @@
         test-checksum-match = ./tests/checksum-match.sh;
         test-checksum-error = ./tests/checksum-error.sh;
         test-not-applied = ./tests/not-applied.sh;
+        test-error = ./tests/error.sh;
       };
 
       tests = builtins.mapAttrs runTest testFiles;
