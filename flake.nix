@@ -15,6 +15,7 @@
       utilLib = project-utils.lib;
 
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      lib = pkgs.lib;
 
       treefmtEval = treefmt-nix.lib.evalModule pkgs {
         projectRootFile = "flake.nix";
@@ -36,24 +37,31 @@
         text = builtins.readFile ./tiny-sqlite-migrate.sh;
       };
 
-      runTest = testPath: pkgs.runCommandNoCC "run-test"
-        { } ''
-        export PATH="${tiny-sqlite-migrate}/bin:${pkgs.sqlite}/bin:$PATH"
-        cp -Lr ${./migrations} ./migrations
-        echo "set -euo pipefail" > ./test.sh
-        cat ${testPath} >> ./test.sh
-        bash ./test.sh
-        touch "$out"
-      '';
+      runTest = name: testPath:
+        pkgs.runCommandNoCC name { } ''
+          set -euo pipefail
+          export PATH="${tiny-sqlite-migrate}/bin:${pkgs.sqlite}/bin:$PATH"
+          cp -Lr ${./migrations} ./migrations
+          echo "set -euo pipefail" > ./test.sh
+          cat ${testPath} >> ./test.sh
+          bash ./test.sh
+          touch "$out"
+        '';
 
-      tests = {
-        can-migrate = runTest ./tests/can-migrate.sh;
+      testFiles = {
+        test-can-migrate = ./tests/can-migrate.sh;
+        test-no-db-file = ./tests/no-db-file.sh;
       };
+
+      tests = builtins.mapAttrs runTest testFiles;
+
+      all-test = pkgs.linkFarm "all-test" tests;
 
       packages = utilLib.safeMergeAttrs [
         scripts
         tests
         {
+          inherit all-test;
           formatting = treefmtEval.config.build.check self;
         }
       ];

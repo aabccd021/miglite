@@ -24,12 +24,12 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$db_file" ] || [ -z "$migrations_dir" ]; then
-  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--validate-only]" >&2
+  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--validate-only]"
   exit 1
 fi
 
 if [ ! -f "$db_file" ]; then
-  echo "Database file not found at $db_file" >&2
+  echo "Database file not found at $db_file"
   exit 1
 fi
 
