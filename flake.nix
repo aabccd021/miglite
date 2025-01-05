@@ -33,7 +33,7 @@
 
       tiny-sqlite-migrate = pkgs.writeShellApplication {
         name = "tiny-sqlite-migrate";
-        runtimeInputs = [ pkgs.sqlite ];
+        runtimeInputs = [ pkgs.sqlite pkgs.gawk ];
         text = builtins.readFile ./tiny-sqlite-migrate.sh;
       };
 
