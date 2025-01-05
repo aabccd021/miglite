@@ -72,6 +72,8 @@
         {
           inherit all-test;
           formatting = treefmtEval.config.build.check self;
+          tiny-sqlite-migrate = tiny-sqlite-migrate;
+          default = tiny-sqlite-migrate;
         }
       ];
 
