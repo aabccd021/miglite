@@ -2,17 +2,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    project-utils = {
-      url = "github:aabccd021/project-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-safe-merge-attrs.url = "github:aabccd021/nix-safe-merge-attrs";
   };
 
-  outputs = { self, nixpkgs, treefmt-nix, project-utils }:
+  outputs = { self, nixpkgs, treefmt-nix, nix-safe-merge-attrs }:
     let
-
-      utilPkgs = project-utils.packages.x86_64-linux;
-      utilLib = project-utils.lib;
 
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
@@ -25,10 +19,6 @@
         programs.shellcheck.enable = true;
         settings.formatter.shellcheck.options = [ "-s" "sh" ];
         settings.global.excludes = [ "*.sql" "LICENSE" ];
-      };
-
-      scripts = {
-        checkpoint = utilPkgs.checkpoint;
       };
 
       tiny-sqlite-migrate = pkgs.writeShellApplication {
@@ -66,8 +56,7 @@
 
       all-test = pkgs.linkFarm "all-test" tests;
 
-      packages = utilLib.safeMergeAttrs [
-        scripts
+      packages = nix-safe-merge-attrs.lib.safeMergeAttrs [
         tests
         {
           inherit all-test;
@@ -85,13 +74,6 @@
       packages.x86_64-linux = packages;
 
       checks.x86_64-linux = packages;
-
-      apps.x86_64-linux = builtins.mapAttrs
-        (name: script: {
-          type = "app";
-          program = "${script}/bin/${name}";
-        })
-        scripts;
 
     };
 }
