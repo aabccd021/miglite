@@ -5,13 +5,13 @@ db=$(mktemp)
 cp ./migrations_template/s1-user.sql "$migrations"
 cp ./migrations_template/s2-tweet.sql "$migrations"
 
-tiny-sqlite-migrate --db "$db" --migrations "$migrations" >/dev/null
+miglite --db "$db" --migrations "$migrations" >/dev/null
 
 rm "$migrations/s1-user.sql"
 cp ./migrations_template/s1-user-modified.sql "$migrations"
 
 exit_code=0
-tiny-sqlite-migrate --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
+miglite --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"

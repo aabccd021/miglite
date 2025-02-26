@@ -5,7 +5,7 @@ cp ./migrations_template/s1-user.sql "$migrations"
 cp ./migrations_template/s2-tweet.sql "$migrations"
 
 exit_code=0
-tiny-sqlite-migrate --db ./db.sqlite --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
+miglite --db ./db.sqlite --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"

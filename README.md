@@ -1,1 +1,1 @@
-# tiny-sqlite-migrate
+# miglite

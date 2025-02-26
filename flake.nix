@@ -23,16 +23,16 @@
         settings.global.excludes = [ "*.sql" "LICENSE" ];
       };
 
-      tiny-sqlite-migrate = pkgs.writeShellApplication {
-        name = "tiny-sqlite-migrate";
+      miglite = pkgs.writeShellApplication {
+        name = "miglite";
         runtimeInputs = [ pkgs.sqlite pkgs.gawk ];
-        text = builtins.readFile ./tiny-sqlite-migrate.sh;
+        text = builtins.readFile ./miglite.sh;
       };
 
       runTest = name: testPath:
         pkgs.runCommandNoCC name { } ''
           set -euo pipefail
-          export PATH="${tiny-sqlite-migrate}/bin:${pkgs.sqlite}/bin:$PATH"
+          export PATH="${miglite}/bin:${pkgs.sqlite}/bin:$PATH"
           cp -Lr ${./migrations} ./migrations_template
           echo "set -euo pipefail" > ./test.sh
           cat ${testPath} >> ./test.sh
@@ -62,8 +62,8 @@
         {
           all-test = all-test;
           formatting = treefmtEval.config.build.check self;
-          tiny-sqlite-migrate = tiny-sqlite-migrate;
-          default = tiny-sqlite-migrate;
+          miglite = miglite;
+          default = miglite;
         }
       ;
 
