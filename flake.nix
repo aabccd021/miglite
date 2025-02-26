@@ -10,7 +10,18 @@
   outputs = { self, nixpkgs, treefmt-nix }:
     let
 
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      overlay = (final: prev: {
+        miglite = final.writeShellApplication {
+          name = "miglite";
+          runtimeInputs = [ final.sqlite final.gawk ];
+          text = builtins.readFile ./miglite.sh;
+        };
+      });
+
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ overlay ];
+      };
 
       treefmtEval = treefmt-nix.lib.evalModule pkgs {
         projectRootFile = "flake.nix";
@@ -23,16 +34,10 @@
         settings.global.excludes = [ "*.sql" "LICENSE" ];
       };
 
-      miglite = pkgs.writeShellApplication {
-        name = "miglite";
-        runtimeInputs = [ pkgs.sqlite pkgs.gawk ];
-        text = builtins.readFile ./miglite.sh;
-      };
-
       runTest = name: testPath:
         pkgs.runCommandNoCC name { } ''
           set -euo pipefail
-          export PATH="${miglite}/bin:${pkgs.sqlite}/bin:$PATH"
+          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
           cp -Lr ${./migrations} ./migrations_template
           echo "set -euo pipefail" > ./test.sh
           cat ${testPath} >> ./test.sh
@@ -62,8 +67,8 @@
         {
           all-test = all-test;
           formatting = treefmtEval.config.build.check self;
-          miglite = miglite;
-          default = miglite;
+          miglite = pkgs.miglite;
+          default = pkgs.miglite;
         }
       ;
 
@@ -75,6 +80,8 @@
       packages.x86_64-linux = packages;
 
       checks.x86_64-linux = packages;
+
+      overlays.default = overlay;
 
     };
 }
