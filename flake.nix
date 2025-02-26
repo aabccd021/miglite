@@ -55,6 +55,7 @@
         test-not-applied = ./tests/not-applied.sh;
         test-error = ./tests/error.sh;
         test-insert-middle = ./tests/insert-middle.sh;
+        test-insert-first = ./tests/insert-first.sh;
         test-remove-middle = ./tests/remove-middle.sh;
         test-remove-Last = ./tests/remove-last.sh;
       };
