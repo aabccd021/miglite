@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS migrations (
 EOF
 
 id=0
-prev_checksum=$(echo | md5sum | awk '{print $1}')
+file_checksum=$(echo | md5sum | awk '{print $1}')
 
 migrations=$(find "$migrations_dir" -type f | sort)
 
@@ -49,17 +49,16 @@ for migration in $migrations; do
   id=$((id + 1))
   migration_name=$(basename "$migration")
   file_content=$(cat "$migration")
-  curr_checksum=$(echo "$prev_checksum $file_content" | md5sum | awk '{print $1}')
-  prev_checksum=$curr_checksum
+  file_checksum=$(echo "$file_checksum $file_content" | md5sum | awk '{print $1}')
   db_checksum=$(sqlite3 "$db_file" "SELECT checksum FROM migrations WHERE id = $id;")
 
   if [ -n "$db_checksum" ]; then
 
-    if [ "$db_checksum" != "$curr_checksum" ]; then
+    if [ "$db_checksum" != "$file_checksum" ]; then
       echo "[CHECKSUM ERROR] $migration_name"
       echo "Migration ID      : $id"
       echo "Database checksum : $db_checksum"
-      echo "File checksum     : $curr_checksum"
+      echo "File checksum     : $file_checksum"
       exit 1
     fi
 
@@ -79,6 +78,6 @@ for migration in $migrations; do
   fi
 
   echo "[JUST APPLIED]   $migration_name"
-  sqlite3 "$db_file" "INSERT INTO migrations (checksum) VALUES ('$curr_checksum');"
+  sqlite3 "$db_file" "INSERT INTO migrations (checksum) VALUES ('$file_checksum');"
 
 done
