@@ -1,11 +1,13 @@
 {
+
+  nixConfig.allow-import-from-derivation = false;
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    nix-safe-merge-attrs.url = "github:aabccd021/nix-safe-merge-attrs";
   };
 
-  outputs = { self, nixpkgs, treefmt-nix, nix-safe-merge-attrs }:
+  outputs = { self, nixpkgs, treefmt-nix }:
     let
 
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
@@ -56,15 +58,14 @@
 
       all-test = pkgs.linkFarm "all-test" tests;
 
-      packages = nix-safe-merge-attrs.lib.safeMergeAttrs [
-        tests
+      packages = tests //
         {
-          inherit all-test;
+          all-test = all-test;
           formatting = treefmtEval.config.build.check self;
           tiny-sqlite-migrate = tiny-sqlite-migrate;
           default = tiny-sqlite-migrate;
         }
-      ];
+      ;
 
     in
     {
