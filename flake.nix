@@ -13,7 +13,7 @@
       overlay = (final: prev: {
         miglite = final.writeShellApplication {
           name = "miglite";
-          runtimeInputs = [ final.sqlite final.gawk ];
+          runtimeInputs = [ final.sqlite ];
           text = builtins.readFile ./miglite.sh;
         };
       });
