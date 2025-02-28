@@ -55,15 +55,6 @@ Migration files should be SQL files placed in the migrations directory.
 They will be executed in alphabetical order sorted by `sort` command.
 So prefixing them with numbers like `001_create_users.sql`, `002_add_email_column.sql`, etc. is recommended.
 
-### Migration Tracking
-
-The script creates a `migrations` table in your database to track applied migrations:
-
-Each applied migration gets an entry with:
-
-- An auto-incremented ID
-- A checksum calculated from all migrations up to that point
-
 ### Checksum Validation
 
 When running the script on a database with existing migrations,
