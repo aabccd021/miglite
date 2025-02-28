@@ -39,7 +39,7 @@ if [ ! -f "$db_file" ]; then
 fi
 
 if [ -n "$upto" ] && [ ! -f "$migrations_dir/$upto" ]; then
-  echo "Migration file $upto not found in $migrations_dir, but used in --up-to"
+  echo "Migration file $upto was used in --up-to but not found in $migrations_dir"
   exit 1
 fi
 
