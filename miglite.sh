@@ -1,6 +1,6 @@
 db_file=""
 migrations_dir=""
-validate_only=false
+check=false
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -12,8 +12,8 @@ while [ $# -gt 0 ]; do
     migrations_dir=$2
     shift
     ;;
-  --validate-only)
-    validate_only=true
+  --check)
+    check=true
     ;;
   *)
     echo "Error: Unknown flag: $1" >&2
@@ -24,7 +24,7 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$db_file" ] || [ -z "$migrations_dir" ]; then
-  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--validate-only]"
+  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--check]"
   exit 1
 fi
 
@@ -67,7 +67,7 @@ for migration in $migrations; do
 
   fi
 
-  if [ "$validate_only" = true ]; then
+  if [ "$check" = true ]; then
     echo "[NOT APPLIED]    $migration_name"
     continue
   fi

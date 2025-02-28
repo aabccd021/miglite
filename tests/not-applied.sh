@@ -7,7 +7,7 @@ miglite --db "$db" --migrations "$migrations"
 
 cp ./migrations_template/s2-tweet.sql "$migrations"
 cp ./migrations_template/s3-favorite.sql "$migrations"
-miglite --db "$db" --migrations "$migrations" --validate-only >"$assert_dir/actual.txt"
+miglite --db "$db" --migrations "$migrations" --check >"$assert_dir/actual.txt"
 
 cat >"$assert_dir/expected.txt" <<EOF
 [CHECKSUM MATCH] s1-user.sql
