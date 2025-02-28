@@ -16,7 +16,7 @@ while [ $# -gt 0 ]; do
   --check)
     check=true
     ;;
-  --upto)
+  --up-to)
     upto=$2
     shift
     ;;
