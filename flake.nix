@@ -34,44 +34,16 @@
         settings.global.excludes = [ "*.sql" "LICENSE" ];
       };
 
-      runTest = name: testPath:
-        pkgs.runCommandNoCC name { } ''
-          set -euo pipefail
-          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          cp -Lr ${./migrations} ./migrations_template
-          echo "set -euo pipefail" > ./test.sh
-          cat ${testPath} >> ./test.sh
-          bash ./test.sh
-          touch "$out"
-        '';
-
-      testFiles = {
-        test-can-migrate = ./tests/can-migrate.sh;
-        test-can-migrate-again = ./tests/can-migrate-again.sh;
-        test-no-db-file = ./tests/no-db-file.sh;
-        test-checksum-match = ./tests/checksum-match.sh;
-        test-checksum-error = ./tests/checksum-error.sh;
-        test-checksum-error2 = ./tests/checksum-error2.sh;
-        test-not-applied = ./tests/not-applied.sh;
-        test-error = ./tests/error.sh;
-        test-insert-middle = ./tests/insert-middle.sh;
-        test-insert-first = ./tests/insert-first.sh;
-        test-remove-middle = ./tests/remove-middle.sh;
-        test-remove-Last = ./tests/remove-last.sh;
+      test = import ./test {
+        pkgs = pkgs;
       };
 
-      tests = builtins.mapAttrs runTest testFiles;
-
-      all-test = pkgs.linkFarm "all-test" tests;
-
-      packages = tests //
-        {
-          all-test = all-test;
-          formatting = treefmtEval.config.build.check self;
-          miglite = pkgs.miglite;
-          default = pkgs.miglite;
-        }
-      ;
+      packages = test.tests // {
+        all-test = test.all-test;
+        formatting = treefmtEval.config.build.check self;
+        miglite = pkgs.miglite;
+        default = pkgs.miglite;
+      };
 
     in
     {
