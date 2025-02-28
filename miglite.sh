@@ -1,6 +1,7 @@
 db_file=""
 migrations_dir=""
 check=false
+until=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -14,6 +15,10 @@ while [ $# -gt 0 ]; do
     ;;
   --check)
     check=true
+    ;;
+  --until)
+    until=$2
+    shift
     ;;
   *)
     echo "Error: Unknown flag: $1" >&2
@@ -44,8 +49,13 @@ id=0
 file_checksum=$(echo | md5sum | cut -d' ' -f1)
 
 migrations=$(find "$migrations_dir" -type f | sort)
+migration_name=""
 
 for migration in $migrations; do
+  if [ -n "$until" ] && [ "$migration_name" = "$until" ]; then
+    break
+  fi
+
   id=$((id + 1))
   migration_name=$(basename "$migration")
   file_content=$(cat "$migration")
@@ -81,3 +91,8 @@ for migration in $migrations; do
   sqlite3 "$db_file" "INSERT INTO migrations (checksum) VALUES ('$file_checksum');"
 
 done
+
+if [ -n "$until" ]; then
+  echo "Migration $until not found"
+  exit 1
+fi
