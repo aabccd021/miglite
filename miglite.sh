@@ -48,17 +48,17 @@ EOF
 id=0
 file_checksum=$(echo | md5sum | cut -d' ' -f1)
 
-migrations=$(find "$migrations_dir" -type f | sort)
+migration_files=$(find "$migrations_dir" -type f | sort)
 migration_name=""
 
-for migration in $migrations; do
+for migration_file in $migration_files; do
   if [ -n "$upto" ] && [ "$migration_name" = "$upto" ]; then
     break
   fi
 
   id=$((id + 1))
-  migration_name=$(basename "$migration")
-  file_content=$(cat "$migration")
+  migration_name=$(basename "$migration_file")
+  file_content=$(cat "$migration_file")
   file_checksum=$(echo "$file_checksum $file_content" | md5sum | cut -d' ' -f1)
   db_checksum=$(sqlite3 "$db_file" "SELECT checksum FROM migrations WHERE id = $id;")
 
@@ -82,7 +82,7 @@ for migration in $migrations; do
     continue
   fi
 
-  if ! sqlite3 "$db_file" <"$migration"; then
+  if ! sqlite3 "$db_file" <"$migration_file"; then
     echo "[SQL ERROR]      $migration_name"
     exit 1
   fi
