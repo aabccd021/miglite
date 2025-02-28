@@ -22,8 +22,8 @@ cat >"$assert_dir/expected.txt" <<EOF
 [CHECKSUM MATCH] s1-user.sql
 [CHECKSUM ERROR] s3-favorite.sql
 Migration ID      : 2
-Database checksum : 696f1cc460cf1efb87ce05a2b974a292
-File checksum     : d8107ac3b2a451c38b9a8f2b98df5141
+Database checksum : 6f216f723e05a21fea9b18be15662c12
+File checksum     : f632f88e4962376e96e83929f42c261c
 EOF
 
 diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"

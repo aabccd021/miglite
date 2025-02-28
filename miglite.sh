@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS migrations (
 EOF
 
 id=0
-file_checksum=$(echo | md5sum | cut -d' ' -f1)
+file_checksum=""
 migration_name=""
 
 migration_files=$(find "$migrations_dir" -type f | sort)
