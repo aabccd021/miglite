@@ -47,9 +47,9 @@ EOF
 
 id=0
 file_checksum=$(echo | md5sum | cut -d' ' -f1)
+migration_name=""
 
 migration_files=$(find "$migrations_dir" -type f | sort)
-migration_name=""
 
 for migration_file in $migration_files; do
   if [ -n "$upto" ] && [ "$migration_name" = "$upto" ]; then
