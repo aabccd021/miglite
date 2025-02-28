@@ -29,12 +29,17 @@ while [ $# -gt 0 ]; do
 done
 
 if [ -z "$db_file" ] || [ -z "$migrations_dir" ]; then
-  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--check]"
+  echo "Usage: migrate --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]" >&2
   exit 1
 fi
 
 if [ ! -f "$db_file" ]; then
   echo "Database file not found at $db_file"
+  exit 1
+fi
+
+if [ -n "$upto" ] && [ ! -f "$migrations_dir/$upto" ]; then
+  echo "Migration file $upto not found in $migrations_dir, but used in --up-to"
   exit 1
 fi
 
@@ -91,8 +96,3 @@ for migration_file in $migration_files; do
   sqlite3 "$db_file" "INSERT INTO migrations (checksum) VALUES ('$file_checksum');"
 
 done
-
-if [ -n "$upto" ]; then
-  echo "Migration $upto not found"
-  exit 1
-fi
