@@ -1,7 +1,7 @@
 db_file=""
 migrations_dir=""
 check=false
-until=""
+upto=""
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -16,8 +16,8 @@ while [ $# -gt 0 ]; do
   --check)
     check=true
     ;;
-  --until)
-    until=$2
+  --upto)
+    upto=$2
     shift
     ;;
   *)
@@ -52,7 +52,7 @@ migrations=$(find "$migrations_dir" -type f | sort)
 migration_name=""
 
 for migration in $migrations; do
-  if [ -n "$until" ] && [ "$migration_name" = "$until" ]; then
+  if [ -n "$upto" ] && [ "$migration_name" = "$upto" ]; then
     break
   fi
 
@@ -92,7 +92,7 @@ for migration in $migrations; do
 
 done
 
-if [ -n "$until" ]; then
-  echo "Migration $until not found"
+if [ -n "$upto" ]; then
+  echo "Migration $upto not found"
   exit 1
 fi
