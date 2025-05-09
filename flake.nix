@@ -2,10 +2,8 @@
 
   nixConfig.allow-import-from-derivation = false;
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    treefmt-nix.url = "github:numtide/treefmt-nix";
-  };
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.treefmt-nix.url = "github:numtide/treefmt-nix";
 
   outputs = { self, nixpkgs, treefmt-nix }:
     let
@@ -34,13 +32,18 @@
         settings.global.excludes = [ "*.sql" "LICENSE" ];
       };
 
-      test = import ./test {
-        pkgs = pkgs;
+      devShells.default = pkgs.mkShellNoCC {
+        buildInputs = [ pkgs.nixd ];
       };
+
+      test = import ./test { pkgs = pkgs; };
+
+      formatter = treefmtEval.config.build.wrapper;
 
       packages = test.tests // {
         all-test = test.all-test;
         formatting = treefmtEval.config.build.check self;
+        formatter = formatter;
         miglite = pkgs.miglite;
         default = pkgs.miglite;
       };
@@ -48,12 +51,13 @@
     in
     {
 
-      formatter.x86_64-linux = treefmtEval.config.build.wrapper;
-
-      packages.x86_64-linux = packages;
+      packages.x86_64-linux = packages // rec {
+        gcroot = pkgs.linkFarm "gcroot" packages;
+      };
 
       checks.x86_64-linux = packages;
-
+      formatter.x86_64-linux = formatter;
+      devShells.x86_64-linux = devShells;
       overlays.default = overlay;
 
     };
