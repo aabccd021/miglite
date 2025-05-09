@@ -39,7 +39,7 @@
 
       formatter = treefmtEval.config.build.wrapper;
 
-      packages = test.tests // {
+      packages = devShells // test.tests // {
         all-test = test.all-test;
         formatting = treefmtEval.config.build.check self;
         formatter = formatter;
@@ -50,7 +50,7 @@
     in
     {
 
-      packages.x86_64-linux = packages // rec {
+      packages.x86_64-linux = packages // {
         gcroot = pkgs.linkFarm "gcroot" packages;
       };
 
