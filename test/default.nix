@@ -1,6 +1,7 @@
 { pkgs }:
 let
-  runTest = name: testPath:
+  runTest =
+    name: testPath:
     pkgs.runCommandNoCC name { } ''
       set -euo pipefail
       export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
