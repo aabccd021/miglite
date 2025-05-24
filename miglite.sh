@@ -51,7 +51,7 @@ sqlite3 "$db_file" <<EOF
 CREATE TABLE IF NOT EXISTS migrations (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   checksum TEXT NOT NULL
-);
+) STRICT;
 EOF
 
 id=0
