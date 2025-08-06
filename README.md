@@ -2,6 +2,10 @@
 
 Miglite is a shell script for migrating SQLite databases.
 
+```
+miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
+```
+
 Miglite will apply all migration files in a specified directory in alphabetical order.
 
 Migrations file that have already been applied will not be applied for a second time,
@@ -12,10 +16,6 @@ of the already applied migrations.
 
 When `--up-to` flag is used, Miglite will apply migrations or verify checksums only up to a specific
 migration file.
-
-```
-miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
-```
 
 ## Examples
 
