@@ -1,13 +1,13 @@
 # Miglite
 
+A POSIX compliant shell script for migrating SQLite databases.
+
+![miglite](https://github.com/user-attachments/assets/1e7b1c4c-9edc-45cd-97e6-08c460410bd5)
+
 ## TODO
 
 - upto test
 - change license
-
-A POSIX compliant shell script for migrating SQLite databases.
-
-![miglite](https://github.com/user-attachments/assets/1e7b1c4c-9edc-45cd-97e6-08c460410bd5)
 
 ## Overview
 
