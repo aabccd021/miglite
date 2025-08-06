@@ -1,12 +1,8 @@
 # Miglite
 
-Shell script for migrating SQLite databases.
+Miglite is a shell script for migrating SQLite databases.
 
-## Usage
-
-Put all migration sql files in a directory, then run miglite.
-Miglite will apply all migrations that haven't been applied yet,
-in alphabetical order of the filenames.
+Miglite will apply all migrations in a specified directory to a SQLite database in alphabetical order.
 
 ```
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
