@@ -54,7 +54,6 @@ EOF
 
 id=0
 file_checksum=""
-migration_name=""
 
 # shellcheck disable=SC2012
 migration_names=$(ls -1 "$migrations_dir" | sort)
