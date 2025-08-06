@@ -2,11 +2,6 @@
 
 Shell script for migrating SQLite databases.
 
-## TODO
-
-- upto test
-- change license
-
 ## Usage
 
 ```

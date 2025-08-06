@@ -57,14 +57,16 @@ file_checksum=""
 
 # shellcheck disable=SC2012
 migration_names=$(ls -1 "$migrations_dir" | sort)
+prev_migration_name=""
 
 for migration_name in $migration_names; do
-  migration_file="$migrations_dir/$migration_name"
-  if [ -n "$upto" ] && [ "$migration_name" = "$upto" ]; then
+  if [ -n "$upto" ] && [ "$prev_migration_name" = "$upto" ]; then
     break
   fi
+  prev_migration_name="$migration_name"
 
   id=$((id + 1))
+  migration_file="$migrations_dir/$migration_name"
   migration_content=$(cat "$migration_file")
   file_checksum=$(echo "$file_checksum$migration_content" | md5sum | cut -d' ' -f1)
   db_checksum=$(sqlite3 "$db_file" "SELECT checksum FROM migrations WHERE id = $id;")

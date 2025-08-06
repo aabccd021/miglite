@@ -49,6 +49,7 @@
 
       testFiles = {
         test-can-migrate = ./test/can-migrate.sh;
+        test-can-migrate-upto = ./test/can-migrate-upto.sh;
         test-can-migrate-again = ./test/can-migrate-again.sh;
         test-no-db-file = ./test/no-db-file.sh;
         test-checksum-match = ./test/checksum-match.sh;
