@@ -62,12 +62,9 @@
         name: file: pkgs.runCommand name testConfig "bash ${file} && touch $out"
       ) testFiles;
 
-      formatter = treefmtEval.config.build.wrapper;
-
       packages = tests // {
         all-tests = pkgs.linkFarm "all-tests" tests;
         formatting = treefmtEval.config.build.check self;
-        formatter = formatter;
         miglite = pkgs.miglite;
         default = pkgs.miglite;
       };
@@ -77,8 +74,9 @@
 
       packages.x86_64-linux = packages;
       checks.x86_64-linux = packages;
-      formatter.x86_64-linux = formatter;
       overlays.default = overlay;
+
+      formatter.x86_64-linux = treefmtEval.config.build.wrapper;
 
       devShells.x86_64-linux.default = pkgs.mkShellNoCC {
         buildInputs = [
