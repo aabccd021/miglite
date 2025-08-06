@@ -7,8 +7,8 @@ Miglite will apply all migration files in a specified directory in alphabetical 
 Migrations that have already been applied will not be applied for a second time,
 but their checksums will be verified to ensure they haven't changed.
 
-Using `--check` flag, you can verify wether your migration files are unchanged without actually
-applying them.
+Using `--check` flag, you can verify wether your migration files are unchanged, without applying
+them.
 
 Using `--up-to` flag, you can apply migrations or verify checksums only up to a specific migration
 file.
