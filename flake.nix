@@ -73,7 +73,9 @@
     {
 
       packages.x86_64-linux = packages;
+
       checks.x86_64-linux = packages;
+
       overlays.default = overlay;
 
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
