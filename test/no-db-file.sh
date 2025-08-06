@@ -1,6 +1,8 @@
 set -eu
 
-assert_dir=$(mktemp -d)
+trap 'cd $(pwd)' EXIT
+cd "$(mktemp -d)" || exit 1
+
 migrations=$(mktemp -d)
 
 cat >"$migrations/s1-user.sql" <<EOF
@@ -23,13 +25,13 @@ CREATE TABLE tweet (
 EOF
 
 exit_code=0
-miglite --db ./db.sqlite --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
+miglite --db ./db.sqlite --migrations "$migrations" >actual.txt || exit_code=$?
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"
   exit 1
 fi
 
-echo "Database file not found at ./db.sqlite" >"$assert_dir/expected.txt"
+echo "Database file not found at ./db.sqlite" >expected.txt
 
-diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
+diff --unified --color=always expected.txt actual.txt

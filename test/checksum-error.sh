@@ -1,6 +1,8 @@
 set -eu
 
-assert_dir=$(mktemp -d)
+trap 'cd $(pwd)' EXIT
+cd "$(mktemp -d)" || exit 1
+
 migrations=$(mktemp -d)
 db=$(mktemp)
 
@@ -36,26 +38,26 @@ CREATE TABLE user (
 EOF
 
 exit_code=0
-miglite --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?
+miglite --db "$db" --migrations "$migrations" >actual.txt || exit_code=$?
 
 if [ "$exit_code" -ne 1 ]; then
   echo "Error: Expected exit code 1, got $exit_code"
   exit 1
 fi
 
-cat >"$assert_dir/expected.txt" <<EOF
+cat >expected.txt <<EOF
 [CHECKSUM ERROR] s1-user-modified.sql
 EOF
 
-diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
+diff --unified --color=always expected.txt actual.txt
 
-sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$assert_dir/actual.txt"
+sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >actual.txt
 
-cat >"$assert_dir/expected.txt" <<EOF
+cat >expected.txt <<EOF
 migrations
 sqlite_sequence
 user
 tweet
 EOF
 
-diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
+diff --unified --color=always expected.txt actual.txt

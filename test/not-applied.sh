@@ -1,6 +1,8 @@
 set -eu
 
-assert_dir=$(mktemp -d)
+trap 'cd $(pwd)' EXIT
+cd "$(mktemp -d)" || exit 1
+
 migrations=$(mktemp -d)
 db=$(mktemp)
 
@@ -34,22 +36,22 @@ CREATE TABLE favorite (
 );
 EOF
 
-miglite --db "$db" --migrations "$migrations" --check >"$assert_dir/actual.txt"
+miglite --db "$db" --migrations "$migrations" --check >actual.txt
 
-cat >"$assert_dir/expected.txt" <<EOF
+cat >expected.txt <<EOF
 [CHECKSUM MATCH] s1-user.sql
 [NOT APPLIED]    s2-tweet.sql
 [NOT APPLIED]    s3-favorite.sql
 EOF
 
-diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
+diff --unified --color=always expected.txt actual.txt
 
-sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$assert_dir/actual.txt"
+sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >actual.txt
 
-cat >"$assert_dir/expected.txt" <<EOF
+cat >expected.txt <<EOF
 migrations
 sqlite_sequence
 user
 EOF
 
-diff --unified --color=always "$assert_dir/expected.txt" "$assert_dir/actual.txt"
+diff --unified --color=always expected.txt actual.txt
