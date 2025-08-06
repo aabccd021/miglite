@@ -4,8 +4,7 @@ set -eu
 
 db_file=""
 migrations_dir=""
-check=false
-upto=""
+check=false upto=""
 
 while [ $# -gt 0 ]; do
   case "$1" in

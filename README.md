@@ -2,10 +2,16 @@
 
 Miglite is a shell script for migrating SQLite databases.
 
+## Dependencies
+
+- GNU Coreutils
+- sqlite3 CLI
+- POSIX compliant shell
+
 ## Usage
 
 ```
-miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
+./miglite.sh --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
 
 When executed, Miglite will apply all migration files in the specified directory in alphabetical
@@ -27,19 +33,19 @@ See [tests](./test) for more examples.
 ### Apply All Migrations
 
 ```bash
-miglite --db ./my_database.db --migrations ./migrations
+./miglite.sh --db ./my_database.db --migrations ./migrations
 ```
 
 ### Check Migrations Without Applying
 
 ```bash
-miglite --db ./my_database.db --migrations ./migrations --check
+./miglite.sh --db ./my_database.db --migrations ./migrations --check
 ```
 
 ### Apply Migrations Up To a Specific File
 
 ```bash
-miglite --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
+./miglite.sh --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
 ```
 
 ### Run with Nix
