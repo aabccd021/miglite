@@ -80,15 +80,13 @@
 
       tests = builtins.mapAttrs runTest testFiles;
 
-      all-test = pkgs.linkFarm "all-test" tests;
-
       formatter = treefmtEval.config.build.wrapper;
 
       packages =
         devShells
         // tests
         // {
-          all-test = all-test;
+          all-test = pkgs.linkFarm "all-test" tests;
           formatting = treefmtEval.config.build.check self;
           formatter = formatter;
           allInputs = collectInputs inputs;
