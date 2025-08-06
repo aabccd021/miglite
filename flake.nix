@@ -51,21 +51,16 @@
         test-remove-Last = ./test/remove-last.sh;
       };
 
-      runTest =
-        name: testFile:
-        pkgs.runCommand name
-          {
-            buildInputs = [
-              pkgs.miglite
-              pkgs.sqlite
-            ];
-          }
-          ''
-            bash ${testFile}
-            touch "$out"
-          '';
+      testConfig = {
+        buildInputs = [
+          pkgs.miglite
+          pkgs.sqlite
+        ];
+      };
 
-      tests = builtins.mapAttrs runTest testFiles;
+      tests = builtins.mapAttrs (
+        testName: testFile: pkgs.runCommand testName testConfig "bash ${testFile} && touch $out"
+      ) testFiles;
 
       formatter = treefmtEval.config.build.wrapper;
 
