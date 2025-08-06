@@ -1,38 +1,17 @@
 # Miglite
 
-A POSIX compliant shell script for migrating SQLite databases.
-
-![miglite](https://github.com/user-attachments/assets/1e7b1c4c-9edc-45cd-97e6-08c460410bd5)
+Shell script for migrating SQLite databases.
 
 ## TODO
 
 - upto test
 - change license
 
-## Overview
-
-This migration script allows you to:
-
-- Apply SQL migration files to a SQLite database in sequential order
-- Track applied migrations with checksums to detect changes
-- Validate migration files against the database state
-- Run migrations up to a specific file
-
 ## Usage
 
 ```
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
-
-### Required Parameters
-
-- `--db <db_file>`: Path to the SQLite database file
-- `--migrations <migrations_dir>`: Directory containing migration files
-
-### Optional Parameters
-
-- `--check`: Validate migration files against the database. New migrations will not be applied.
-- `--up-to <migration>`: Apply/validate migrations up to and including the specified file
 
 ## Examples
 
@@ -54,30 +33,6 @@ miglite --db ./my_database.db --migrations ./migrations --check
 miglite --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
 ```
 
-## How It Works
-
-### Migration Files
-
-Migration files should be SQL files placed in the migrations directory.
-They will be executed in alphabetical order sorted by `sort` command.
-So prefixing them with numbers like `001_create_users.sql`, `002_add_email_column.sql`, etc. is recommended.
-
-### Checksum Validation
-
-When running the script on a database with existing migrations,
-it validates the checksums of applied migrations against the current migration files.
-
-The script stores the checksum of each migration file in the `migrations` table.
-
-```sql
-CREATE TABLE IF NOT EXISTS migrations (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  checksum TEXT NOT NULL
-);
-```
-
-This prevents changes to migration files after they've been applied.
-
 ## Output Messages
 
 The script provides the following status messages for each migration file:
@@ -88,39 +43,8 @@ The script provides the following status messages for each migration file:
 - `[JUST APPLIED]`: Migration was successfully applied during this run
 - `[SQL ERROR]`: Migration failed to apply due to SQL errors
 
-## Usage with Nix Flakes
-
-### Run directly
+## Usage with Nix
 
 ```sh
 nix run github:aabccd021/miglite -- --db ./my_database.db --migrations ./migrations
-```
-
-### Use as package
-
-```nix
-{
-  inputs.miglite.url = "github:aabccd021/miglite";
-  outputs = { self, miglite }: {
-    packages.x86_64-linux.miglite = miglite.packages.x86_64-linux.miglite;
-  };
-}
-```
-
-### Use with overlays
-
-```nix
-{
-  inputs.miglite.url = "github:aabccd021/miglite";
-  outputs = { self, nixpkgs, miglite }:
-  let
-    pkgs = import nixpkgs {
-      system = "x86_64-linux";
-      overlays = [ miglite.overlays.default ];
-    };
-  in
-  {
-    packages.x86_64-linux.miglite = pkgs.miglite;
-  };
-}
 ```
