@@ -23,14 +23,7 @@
 
       overlay = (
         final: prev: {
-          miglite = final.writeShellApplication {
-            name = "miglite";
-            runtimeInputs = [
-              final.sqlite
-              final.findutils
-            ];
-            text = builtins.readFile ./miglite.sh;
-          };
+          miglite = final.writeShellScriptBin "miglite" (builtins.readFile ./miglite.sh);
         }
       );
 
