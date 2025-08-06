@@ -59,15 +59,44 @@
         buildInputs = [ pkgs.nixd ];
       };
 
-      test = import ./test { pkgs = pkgs; };
+      runTest =
+        name: testPath:
+        pkgs.runCommandNoCC name { } ''
+          set -euo pipefail
+          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
+          cp -Lr ${./test/migrations} ./migrations_template
+          echo "set -euo pipefail" > ./test.sh
+          cat ${testPath} >> ./test.sh
+          bash ./test.sh
+          touch "$out"
+        '';
+
+      testFiles = {
+        test-can-migrate = ./test/can-migrate.sh;
+        test-can-migrate-again = ./test/can-migrate-again.sh;
+        test-no-db-file = ./test/no-db-file.sh;
+        test-checksum-match = ./test/checksum-match.sh;
+        test-checksum-error = ./test/checksum-error.sh;
+        test-checksum-error2 = ./test/checksum-error2.sh;
+        test-not-applied = ./test/not-applied.sh;
+        test-error = ./test/error.sh;
+        test-insert-middle = ./test/insert-middle.sh;
+        test-insert-first = ./test/insert-first.sh;
+        test-remove-middle = ./test/remove-middle.sh;
+        test-remove-Last = ./test/remove-last.sh;
+      };
+
+      tests = builtins.mapAttrs runTest testFiles;
+
+      all-test = pkgs.linkFarm "all-test" tests;
 
       formatter = treefmtEval.config.build.wrapper;
 
       packages =
         devShells
-        // test.tests
+        // tests
         // {
-          all-test = test.all-test;
+          all-test = all-test;
           formatting = treefmtEval.config.build.check self;
           formatter = formatter;
           allInputs = collectInputs inputs;

@@ -1,8 +1,9 @@
+set -eu
+
 db_file=""
 migrations_dir=""
 check=false
 upto=""
-show_checksum_match=true
 
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -20,9 +21,6 @@ while [ $# -gt 0 ]; do
   --up-to)
     upto=$2
     shift
-    ;;
-  --hide-checksum-match)
-    show_checksum_match=false
     ;;
   *)
     echo "Error: Unknown flag: $1" >&2
@@ -81,9 +79,7 @@ for migration_file in $migration_files; do
       exit 1
     fi
 
-    if [ "$show_checksum_match" = true ]; then
-      echo "[CHECKSUM MATCH] $migration_name"
-    fi
+    echo "[CHECKSUM MATCH] $migration_name"
     continue
 
   fi
