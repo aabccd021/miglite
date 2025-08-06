@@ -8,7 +8,7 @@ Miglite is a shell script for migrating SQLite databases.
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
 
-When invoked, miglite will apply all migration files in a specified directory in alphabetical order.
+Miglite will apply all migration files in a specified directory in alphabetical order.
 
 Migrations file that have already been applied will not be applied for a second time,
 but their checksums will be verified to ensure they haven't changed.
