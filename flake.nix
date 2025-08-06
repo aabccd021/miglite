@@ -53,11 +53,17 @@
 
       runTest =
         name: testFile:
-        pkgs.runCommand name { } ''
-          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          bash ${testFile}
-          touch "$out"
-        '';
+        pkgs.runCommand name
+          {
+            buildInputs = [
+              pkgs.miglite
+              pkgs.sqlite
+            ];
+          }
+          ''
+            bash ${testFile}
+            touch "$out"
+          '';
 
       tests = builtins.mapAttrs runTest testFiles;
 
