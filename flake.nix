@@ -70,7 +70,7 @@
       formatter = treefmtEval.config.build.wrapper;
 
       packages = tests // {
-        all-test = pkgs.linkFarm "all-test" tests;
+        all-tests = pkgs.linkFarm "all-tests" tests;
         formatting = treefmtEval.config.build.check self;
         formatter = formatter;
         miglite = pkgs.miglite;

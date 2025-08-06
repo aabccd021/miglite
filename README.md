@@ -4,8 +4,9 @@ Shell script for migrating SQLite databases.
 
 ## Usage
 
-Put all migration sql files in a directory then run miglite.
-Migrations will be applied in alphabetical order.
+Put all migration sql files in a directory, then run miglite.
+Miglite will apply all migrations that haven't been applied yet,
+in alphabetical order of the filenames.
 
 ```
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
@@ -31,6 +32,12 @@ miglite --db ./my_database.db --migrations ./migrations --check
 miglite --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
 ```
 
+### Run with Nix
+
+```sh
+nix run github:aabccd021/miglite -- --db ./my_database.db --migrations ./migrations
+```
+
 ## Output Messages
 
 The script provides the following status messages for each migration file:
@@ -40,6 +47,20 @@ The script provides the following status messages for each migration file:
 - `[NOT APPLIED]`: Migration hasn't been applied yet (only shown when `--check` is used)
 - `[JUST APPLIED]`: Migration was successfully applied during this run
 - `[SQL ERROR]`: Migration failed to apply due to SQL errors
+
+## Development
+
+Run all tests:
+
+```sh
+nix build --no-link .#all-test
+```
+
+Run specific test:
+
+```sh
+nix build --no-link .#test-checksum-error
+```
 
 ## LICENCE
 
