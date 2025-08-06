@@ -53,7 +53,9 @@ The script provides the following status messages for each migration file:
 Run all tests:
 
 ```sh
-nix build --no-link .#all-test
+git clone --depth 1 https://github.com/aabccd021/miglite.git
+cd miglite
+nix build --no-link .#all-tests
 ```
 
 Run specific test:
