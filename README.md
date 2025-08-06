@@ -10,6 +10,9 @@ but their checksums will be verified to ensure they haven't changed.
 Using `--check` flag, you can verify wether your migration files are unchanged without actually
 applying them.
 
+Using `--up-to` flag, you can apply migrations or verify checksums only up to a specific migration
+file.
+
 ```
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
