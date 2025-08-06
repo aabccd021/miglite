@@ -33,19 +33,7 @@
           "-s"
           "sh"
         ];
-        settings.global.excludes = [
-          "*.sql"
-          "LICENSE"
-        ];
       };
-
-      runTest =
-        name: testPath:
-        pkgs.runCommand name { } ''
-          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          bash ${testPath}
-          touch "$out"
-        '';
 
       testFiles = {
         test-can-migrate = ./test/can-migrate.sh;
@@ -62,6 +50,14 @@
         test-remove-middle = ./test/remove-middle.sh;
         test-remove-Last = ./test/remove-last.sh;
       };
+
+      runTest =
+        name: testPath:
+        pkgs.runCommand name { } ''
+          export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
+          bash ${testPath}
+          touch "$out"
+        '';
 
       tests = builtins.mapAttrs runTest testFiles;
 
