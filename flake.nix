@@ -55,11 +55,12 @@
         buildInputs = [
           pkgs.miglite
           pkgs.sqlite
+          pkgs.dash
         ];
       };
 
       tests = builtins.mapAttrs (
-        name: file: pkgs.runCommand name testConfig "bash ${file} && touch $out"
+        name: file: pkgs.runCommand name testConfig "dash ${file} && touch $out"
       ) testFiles;
 
       packages = tests // {
