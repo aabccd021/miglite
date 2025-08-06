@@ -23,7 +23,10 @@
 
       overlay = (
         final: prev: {
-          miglite = final.writeShellScriptBin "miglite" (builtins.readFile ./miglite.sh);
+          miglite = final.writeShellScriptBin "miglite" ''
+            export PATH="${final.sqlite}/bin:$PATH"
+            ${builtins.readFile ./miglite.sh}
+          '';
         }
       );
 
