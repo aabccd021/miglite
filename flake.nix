@@ -59,7 +59,7 @@
         name: testPath:
         pkgs.runCommandNoCC name { } ''
           export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          bash -euo pipefail ${testPath}
+          bash ${testPath}
           touch "$out"
         '';
 

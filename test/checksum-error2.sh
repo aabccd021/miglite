@@ -1,3 +1,5 @@
+set -eu
+
 migrations=$(mktemp -d)
 
 cat >"$migrations/s1-user.sql" <<EOF

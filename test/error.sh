@@ -1,3 +1,5 @@
+set -eu
+
 assert_dir=$(mktemp -d)
 migrations=$(mktemp -d)
 db=$(mktemp)
