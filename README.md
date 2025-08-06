@@ -21,7 +21,7 @@ This migration script allows you to:
 ## Usage
 
 ```
-./migrate --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
+miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
 
 ### Required Parameters
@@ -39,19 +39,19 @@ This migration script allows you to:
 ### Apply All Migrations
 
 ```bash
-./migrate --db ./my_database.db --migrations ./migrations
+miglite --db ./my_database.db --migrations ./migrations
 ```
 
 ### Check Migrations Without Applying
 
 ```bash
-./migrate --db ./my_database.db --migrations ./migrations --check
+miglite --db ./my_database.db --migrations ./migrations --check
 ```
 
 ### Apply Migrations Up To a Specific File
 
 ```bash
-./migrate --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
+miglite --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
 ```
 
 ## How It Works
