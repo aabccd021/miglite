@@ -50,7 +50,7 @@ nix run github:aabccd021/miglite -- --db ./my_database.db --migrations ./migrati
 
 ## Output Messages
 
-The script provides the following status messages for each migration file:
+Each migration file will be prefixed with a status message indicating its state:
 
 - `[CHECKSUM MATCH]`: Migration was previously applied and its checksum is valid
 - `[CHECKSUM ERROR]`: Migration was previously applied but its checksum doesn't match
