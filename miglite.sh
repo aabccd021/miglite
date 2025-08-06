@@ -57,9 +57,9 @@ file_checksum=""
 migration_name=""
 
 # shellcheck disable=SC2012
-migration_files=$(ls -1 "$migrations_dir" | sort)
+migration_names=$(ls -1 "$migrations_dir" | sort)
 
-for migration_name in $migration_files; do
+for migration_name in $migration_names; do
   migration_file="$migrations_dir/$migration_name"
   if [ ! -f "$migration_file" ]; then
     continue
