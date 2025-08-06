@@ -57,7 +57,7 @@
 
       runTest =
         name: testPath:
-        pkgs.runCommandNoCC name { } ''
+        pkgs.runCommand name { } ''
           export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
           bash ${testPath}
           touch "$out"

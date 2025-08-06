@@ -42,9 +42,3 @@ The script provides the following status messages for each migration file:
 - `[NOT APPLIED]`: Migration hasn't been applied yet (only shown when `--check` is used)
 - `[JUST APPLIED]`: Migration was successfully applied during this run
 - `[SQL ERROR]`: Migration failed to apply due to SQL errors
-
-## Usage with Nix
-
-```sh
-nix run github:aabccd021/miglite -- --db ./my_database.db --migrations ./migrations
-```
