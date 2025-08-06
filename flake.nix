@@ -59,7 +59,7 @@
       };
 
       tests = builtins.mapAttrs (
-        testName: testFile: pkgs.runCommand testName testConfig "bash ${testFile} && touch $out"
+        name: file: pkgs.runCommand name testConfig "bash ${file} && touch $out"
       ) testFiles;
 
       formatter = treefmtEval.config.build.wrapper;
