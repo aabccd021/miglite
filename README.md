@@ -11,8 +11,8 @@ miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migrati
 When executed, Miglite will apply all migration files in a specified directory in alphabetical
 order.
 
-Migrations file that have already been applied will not be applied for a second time,
-but their checksums will be verified to ensure they haven't changed.
+Migration files that have already been applied will not be applied for a second time, but their
+checksums will be verified to ensure they haven't changed.
 
 When `--check` flag is used, Miglite will not run any migration, and will only check the checksums
 of the already applied migrations.
