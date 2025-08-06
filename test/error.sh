@@ -2,12 +2,39 @@ assert_dir=$(mktemp -d)
 migrations=$(mktemp -d)
 db=$(mktemp)
 
-cp ./migrations_template/s1-user.sql "$migrations"
+cat >"$migrations/s1-user.sql" <<EOF
+CREATE TABLE user (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL
+);
+EOF
+
 miglite --db "$db" --migrations "$migrations"
 
-cp ./migrations_template/s2-error.sql "$migrations"
-cp ./migrations_template/s3-favorite.sql "$migrations"
-cp ./migrations_template/s4-report.sql "$migrations"
+cat >"$migrations/s2-error.sql" <<EOF
+random non sql string here
+EOF
+
+cat >"$migrations/s3-favorite.sql" <<EOF
+CREATE TABLE favorite (
+  user_id INTEGER NOT NULL,
+  tweet_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (tweet_id) REFERENCES tweet(id)
+);
+EOF
+
+cat >"$migrations/s4-report.sql" <<EOF
+CREATE TABLE report (
+  user_id INTEGER NOT NULL,
+  tweet_id INTEGER NOT NULL,
+  reason VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (tweet_id) REFERENCES tweet(id)
+);
+EOF
 
 exit_code=0
 miglite --db "$db" --migrations "$migrations" >"$assert_dir/actual.txt" || exit_code=$?

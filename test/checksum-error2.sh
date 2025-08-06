@@ -23,10 +23,33 @@ db=$(mktemp)
 miglite --db "$db" --migrations "$migrations"
 
 rm "$migrations"/s2-tweet.sql
-cp ./migrations_template/s2-tweet-modified.sql "$migrations"
+cat >"$migrations/s2-tweet-modified.sql" <<EOF
+CREATE TABLE tweet (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  content TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id)
+);
+EOF
 
-cp ./migrations_template/s3-favorite.sql "$migrations"
-cp ./migrations_template/s4-report.sql "$migrations"
+cat >"$migrations/s3-favorite.sql" <<EOF
+CREATE TABLE favorite (
+  user_id INTEGER NOT NULL,
+  tweet_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (tweet_id) REFERENCES tweet(id)
+);
+EOF
+
+cat >"$migrations/s4-report.sql" <<EOF
+CREATE TABLE report (
+  user_id INTEGER NOT NULL,
+  tweet_id INTEGER NOT NULL,
+  reason VARCHAR(255) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id),
+  FOREIGN KEY (tweet_id) REFERENCES tweet(id)
+);
+EOF
 
 assert_dir=$(mktemp -d)
 

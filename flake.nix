@@ -58,12 +58,8 @@
       runTest =
         name: testPath:
         pkgs.runCommandNoCC name { } ''
-          set -euo pipefail
           export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          cp -Lr ${./test/migrations} ./migrations_template
-          echo "set -euo pipefail" > ./test.sh
-          cat ${testPath} >> ./test.sh
-          bash ./test.sh
+          bash -euo pipefail ${testPath}
           touch "$out"
         '';
 
