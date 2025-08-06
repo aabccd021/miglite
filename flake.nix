@@ -52,10 +52,10 @@
       };
 
       runTest =
-        name: testPath:
+        name: testFile:
         pkgs.runCommand name { } ''
           export PATH="${pkgs.miglite}/bin:${pkgs.sqlite}/bin:$PATH"
-          bash ${testPath}
+          bash ${testFile}
           touch "$out"
         '';
 
