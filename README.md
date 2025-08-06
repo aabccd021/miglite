@@ -56,6 +56,7 @@ Run all tests:
 git clone --depth 1 https://github.com/aabccd021/miglite.git
 cd miglite
 nix build --no-link .#all-tests
+echo "test passed"
 ```
 
 Run specific test:
