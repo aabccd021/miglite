@@ -74,9 +74,6 @@ for migration_name in $migration_names; do
 
     if [ "$db_checksum" != "$file_checksum" ]; then
       echo "[CHECKSUM ERROR] $migration_name"
-      echo "Migration ID      : $id"
-      echo "Database checksum : $db_checksum"
-      echo "File checksum     : $file_checksum"
       exit 1
     fi
 
