@@ -61,10 +61,6 @@ migration_names=$(ls -1 "$migrations_dir" | sort)
 
 for migration_name in $migration_names; do
   migration_file="$migrations_dir/$migration_name"
-  if [ ! -f "$migration_file" ]; then
-    continue
-  fi
-
   if [ -n "$upto" ] && [ "$migration_name" = "$upto" ]; then
     break
   fi
