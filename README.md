@@ -4,6 +4,9 @@ Shell script for migrating SQLite databases.
 
 ## Usage
 
+Put all migration sql files in a directory then run miglite.
+Migrations will be applied in alphabetical order.
+
 ```
 miglite --db <db_file> --migrations <migrations_dir> [--check] [--up-to <migration>]
 ```
