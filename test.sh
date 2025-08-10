@@ -3,8 +3,8 @@
 set -eu
 
 (
-  echo
-  echo "=== Success"
+
+  printf "\n# Success\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -37,8 +37,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Up To Migration"
+
+  printf "\n# Up To Migration\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -68,8 +68,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Multiple Apply"
+
+  printf "\n# Multiple Apply\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -98,8 +98,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Checksum Error - User Table"
+
+  printf "\n# Checksum Error - User Table\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -136,8 +136,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Checksum Error - Tweet Table"
+
+  printf "\n# Checksum Error - Tweet Table\n"
   migrations=$(mktemp -d)
 
   echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
@@ -176,8 +176,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Apply Remaining"
+
+  printf "\n# Apply Remaining\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -214,8 +214,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== SQL Error"
+
+  printf "\n# SQL Error\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -253,8 +253,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Checksum Error - Admin Table"
+
+  printf "\n# Checksum Error - Admin Table\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -290,8 +290,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Checksum Error - Favorite Table"
+
+  printf "\n# Checksum Error - Favorite Table\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -331,8 +331,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Missing Database File"
+
+  printf "\n# Missing Database File\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
 
@@ -352,8 +352,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Check Option"
+
+  printf "\n# Check Option\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -386,8 +386,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Remove Migration File"
+
+  printf "\n# Remove Migration File\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -421,8 +421,8 @@ set -eu
 )
 
 (
-  echo
-  echo "=== Remove Middle Migration File"
+
+  printf "\n# Remove Middle Migration File\n"
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
