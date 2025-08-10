@@ -28,8 +28,6 @@ migration file.
 
 ## Examples
 
-See [tests](./test) for more examples.
-
 ### Apply All Migrations
 
 ```bash
