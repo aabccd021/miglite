@@ -13,7 +13,9 @@
         final: prev: {
           miglite = final.writeTextFile {
             name = "miglite";
+            destination = "/bin/miglite";
             text = builtins.readFile ./miglite.sh;
+            executable = true;
             derivationArgs.buildInputs = [ final.sqlite ];
           };
         }
