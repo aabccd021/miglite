@@ -9,11 +9,11 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt"
 
@@ -43,10 +43,10 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
-  printf "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" --up-to "s2-tweet.sql" >"$tmp/actual.txt"
 
@@ -74,8 +74,8 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt"
   {
@@ -104,13 +104,13 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" >/dev/null
 
   rm "$migrations/s1-user.sql"
-  printf "CREATE TABLE user (id TEXT)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE user (id TEXT)" >"$migrations/s1-user.sql"
 
   exit_code=0
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -140,16 +140,16 @@ set -eu
   echo "=== Checksum Error - Tweet Table"
   migrations=$(mktemp -d)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   tmp=$(mktemp -d)
   db=$(mktemp)
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE tweet (tweet_id TEXT)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
-  printf "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
+  echo "CREATE TABLE tweet (tweet_id TEXT)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
 
   exit_code=0
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -182,13 +182,13 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
-  printf "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt"
 
@@ -220,12 +220,12 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
   ./miglite.sh --db "$db" --migrations "$migrations"
 
   echo "random non sql string here" >"$migrations/s2-error.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
-  printf "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
 
   exit_code=0
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -259,13 +259,13 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE admin (adm_id INTEGER)" >"$migrations/s0-admin.sql"
+  echo "CREATE TABLE admin (adm_id INTEGER)" >"$migrations/s0-admin.sql"
 
   exit_code=0
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -296,13 +296,13 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE report (rep_id INTEGER)" >"$migrations/s4-report.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
 
   exit_code=0
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -336,8 +336,8 @@ set -eu
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   exit_code=0
   ./miglite.sh --db ./db.sqlite --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
@@ -358,11 +358,11 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
   ./miglite.sh --db "$db" --migrations "$migrations"
 
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations" --check >"$tmp/actual.txt"
 
@@ -392,9 +392,9 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
@@ -427,9 +427,9 @@ set -eu
   tmp=$(mktemp -d)
   db=$(mktemp)
 
-  printf "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
-  printf "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
-  printf "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
+  echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
+  echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
+  echo "CREATE TABLE favorite (fav_id INTEGER)" >"$migrations/s3-favorite.sql"
 
   ./miglite.sh --db "$db" --migrations "$migrations"
 
