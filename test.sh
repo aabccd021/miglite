@@ -4,6 +4,7 @@ set -eu
 
 (
   printf "\n# Success\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -33,6 +34,7 @@ set -eu
 
 (
   printf "\n# Up To Migration\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -50,6 +52,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -61,6 +64,7 @@ set -eu
 
 (
   printf "\n# Multiple Apply\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -68,6 +72,7 @@ set -eu
   echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
   echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
   ./miglite.sh --db "$db" --migrations "$migrations" >"$tmp/actual.txt"
+
   {
     echo "[JUST APPLIED]   s1-user.sql"
     echo "[JUST APPLIED]   s2-tweet.sql"
@@ -87,6 +92,7 @@ set -eu
 
 (
   printf "\n# Checksum Error - User Table\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -121,6 +127,7 @@ set -eu
 
 (
   printf "\n# Checksum Error - Tweet Table\n"
+
   migrations=$(mktemp -d)
 
   echo "CREATE TABLE user (id INTEGER)" >"$migrations/s1-user.sql"
@@ -148,6 +155,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -159,6 +167,7 @@ set -eu
 
 (
   printf "\n# Apply Remaining\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -180,6 +189,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -193,6 +203,7 @@ set -eu
 
 (
   printf "\n# SQL Error\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -229,6 +240,7 @@ set -eu
 
 (
   printf "\n# Checksum Error - Admin Table\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -251,6 +263,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -263,6 +276,7 @@ set -eu
 
 (
   printf "\n# Checksum Error - Favorite Table\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -289,6 +303,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -301,6 +316,7 @@ set -eu
 
 (
   printf "\n# Missing Database File\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
 
@@ -320,6 +336,7 @@ set -eu
 
 (
   printf "\n# Check Option\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -350,6 +367,7 @@ set -eu
 
 (
   printf "\n# Remove Migration File\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
@@ -369,6 +387,7 @@ set -eu
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 
   sqlite3 "$db" "SELECT name FROM sqlite_master WHERE type='table';" >"$tmp/actual.txt"
+
   {
     echo "migrations"
     echo "sqlite_sequence"
@@ -381,6 +400,7 @@ set -eu
 
 (
   printf "\n# Remove Middle Migration File\n"
+
   migrations=$(mktemp -d)
   tmp=$(mktemp -d)
   db=$(mktemp)
