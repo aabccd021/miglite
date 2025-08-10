@@ -35,17 +35,12 @@
         ];
       };
 
-      test =
-        pkgs.runCommand "test"
-          {
-            buildInputs = [ pkgs.sqlite ];
-          }
-          ''
-            cp -L ${./test.sh} ./test.sh
-            cp -L ${./miglite.sh} ./miglite.sh
-            ./test.sh
-            touch "$out";
-          '';
+      test = pkgs.runCommand "test" { buildInputs = [ pkgs.sqlite ]; } ''
+        cp -L ${./test.sh} ./test.sh
+        cp -L ${./miglite.sh} ./miglite.sh
+        ./test.sh
+        touch "$out";
+      '';
 
       packages = {
         test = test;
