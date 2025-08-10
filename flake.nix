@@ -9,7 +9,20 @@
     { self, ... }@inputs:
     let
 
-      pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+      overlay = (
+        final: prev: {
+          miglite = final.writeTextFile {
+            name = "miglite";
+            text = builtins.readFile ./miglite.sh;
+            derivationArgs.buildInputs = [ final.sqlite ];
+          };
+        }
+      );
+
+      pkgs = import inputs.nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ overlay ];
+      };
 
       treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs {
         projectRootFile = "flake.nix";
@@ -32,6 +45,8 @@
       packages = {
         test = test;
         formatting = treefmtEval.config.build.check self;
+        miglite = pkgs.miglite;
+        default = pkgs.miglite;
       };
 
     in
@@ -40,6 +55,8 @@
       packages.x86_64-linux = packages;
 
       checks.x86_64-linux = packages;
+
+      overlays.default = overlay;
 
       formatter.x86_64-linux = treefmtEval.config.build.wrapper;
 

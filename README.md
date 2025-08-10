@@ -46,6 +46,12 @@ migration file.
 ./miglite.sh --db ./my_database.db --migrations ./migrations --up-to 005_create_products.sql
 ```
 
+### Run with Nix
+
+```sh
+nix run github:aabccd021/miglite -- --db ./my_database.db --migrations ./migrations
+```
+
 ## Output Messages
 
 Each migration file will be prefixed with a status message indicating its state:
