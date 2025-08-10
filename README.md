@@ -66,19 +66,19 @@ Each migration file will be prefixed with a status message indicating its state:
 
 ## Development
 
-Run all tests:
+Run test:
 
 ```sh
 git clone --depth 1 https://github.com/aabccd021/miglite.git
 cd miglite
-nix build --no-link .#all-tests
+nix build --no-link -L .#test
 echo "test passed"
 ```
 
-Run specific test:
+Format code:
 
 ```sh
-nix build --no-link .#test-checksum-error
+nix fmt
 ```
 
 ## LICENCE
