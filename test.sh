@@ -340,13 +340,13 @@ set -eu
   echo "CREATE TABLE tweet (tweet_id INTEGER)" >"$migrations/s2-tweet.sql"
 
   exit_code=0
-  ./miglite.sh --db ./db.sqlite --migrations "$migrations" >"$tmp/actual.txt" || exit_code=$?
+  ./miglite.sh --db ./db.sqlite --migrations "$migrations" 2>"$tmp/actual.txt" || exit_code=$?
   if [ "$exit_code" -ne 1 ]; then
     echo "Error: Expected exit code 1, got $exit_code"
     exit 1
   fi
 
-  echo "Database file not found at ./db.sqlite" >"$tmp/expected.txt"
+  echo "Error: Database file ./db.sqlite does not exist" >"$tmp/expected.txt"
 
   diff --unified --color=always "$tmp/expected.txt" "$tmp/actual.txt"
 )

@@ -11,12 +11,10 @@
 
       overlay = (
         final: prev: {
-          miglite = final.writeTextFile {
+          miglite = final.writeShellApplication {
             name = "miglite";
-            destination = "/bin/miglite";
             text = builtins.readFile ./miglite.sh;
-            executable = true;
-            derivationArgs.buildInputs = [ final.sqlite ];
+            runtimeInputs = [ final.sqlite ];
           };
         }
       );

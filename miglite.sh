@@ -2,6 +2,11 @@
 
 set -eu
 
+if ! command -v sqlite3 >/dev/null 2>&1; then
+  echo "Error: sqlite3 command not found" >&2
+  exit 1
+fi
+
 db_file=""
 migrations_dir=""
 check=false upto=""
@@ -37,12 +42,12 @@ if [ -z "$db_file" ] || [ -z "$migrations_dir" ]; then
 fi
 
 if [ ! -f "$db_file" ]; then
-  echo "Database file not found at $db_file"
+  echo "Error: Database file $db_file does not exist" >&2
   exit 1
 fi
 
 if [ -n "$upto" ] && [ ! -f "$migrations_dir/$upto" ]; then
-  echo "Migration file $upto was used in --up-to but not found in $migrations_dir"
+  echo "Error: Migration file $migrations_dir/$upto does not exist" >&2
   exit 1
 fi
 
