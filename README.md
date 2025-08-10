@@ -64,23 +64,6 @@ Each migration file will be prefixed with a status message indicating its state:
 - `[JUST APPLIED]`: Migration was successfully applied during this run
 - `[SQL ERROR]`: Migration failed to apply due to SQL errors
 
-## Development
-
-Run test:
-
-```sh
-git clone --depth 1 https://github.com/aabccd021/miglite.git
-cd miglite
-nix build --no-link -L .#test
-echo "test passed"
-```
-
-Format code:
-
-```sh
-nix fmt
-```
-
 ## LICENCE
 
 ```
