@@ -35,36 +35,20 @@
         ];
       };
 
-      testFiles = {
-        test-can-migrate = ./test/can-migrate.sh;
-        test-can-migrate-upto = ./test/can-migrate-upto.sh;
-        test-can-migrate-again = ./test/can-migrate-again.sh;
-        test-no-db-file = ./test/no-db-file.sh;
-        test-checksum-match = ./test/checksum-match.sh;
-        test-checksum-error = ./test/checksum-error.sh;
-        test-checksum-error2 = ./test/checksum-error2.sh;
-        test-not-applied = ./test/not-applied.sh;
-        test-error = ./test/error.sh;
-        test-insert-middle = ./test/insert-middle.sh;
-        test-insert-first = ./test/insert-first.sh;
-        test-remove-middle = ./test/remove-middle.sh;
-        test-remove-Last = ./test/remove-last.sh;
-      };
+      test =
+        pkgs.runCommand "test"
+          {
+            buildInputs = [ pkgs.sqlite ];
+          }
+          ''
+            cp -L ${./test.sh} ./test.sh
+            cp -L ${./miglite.sh} ./miglite.sh
+            ./test.sh
+            touch "$out";
+          '';
 
-      testConfig = {
-        buildInputs = [
-          pkgs.miglite
-          pkgs.sqlite
-          pkgs.dash
-        ];
-      };
-
-      tests = builtins.mapAttrs (
-        name: file: pkgs.runCommand name testConfig "dash ${file} && touch $out"
-      ) testFiles;
-
-      packages = tests // {
-        all-tests = pkgs.linkFarm "all-tests" tests;
+      packages = {
+        test = test;
         formatting = treefmtEval.config.build.check self;
         miglite = pkgs.miglite;
         default = pkgs.miglite;
