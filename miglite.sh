@@ -74,7 +74,7 @@ for migration_name in $migration_names; do
     id=$((id + 1))
     migration_file="$migrations_dir/$migration_name"
     migration_content=$(cat "$migration_file")
-    file_checksum=$(echo "$file_checksum$migration_content" | md5sum | cut -d' ' -f1)
+    file_checksum=$(printf "%s%s" "$file_checksum" "$migration_content" | md5sum | cut -d' ' -f1)
     db_checksum=$(sqlite3 "$db_file" "SELECT checksum FROM migrations WHERE id = $id;")
 
     if [ -n "$db_checksum" ]; then
