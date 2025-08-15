@@ -2,6 +2,13 @@
 
 Miglite is a shell script for migrating SQLite databases.
 
+
+todo
+zig
+foreign key
+synchronization full
+check final schema
+
 ## Dependencies
 
 - GNU Coreutils
